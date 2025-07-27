@@ -1,0 +1,51 @@
+### IntelliJ IDEA ###
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Output directories (compiled classes and artifacts)
+out/
+build/
+target/
+
+# JAR files
+*.jar
+
+# MySQL Connector JAR
+mysql-connector-*.jar
+
+# Logs
+*.log
+
+# System Files
+Thumbs.db
+ehthumbs.db

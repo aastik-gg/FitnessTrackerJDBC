@@ -3,43 +3,52 @@ USE fitnessdb;
 
 -- Users table
 CREATE TABLE users (
-                       user_id INT AUTO_INCREMENT PRIMARY KEY,
-                       email VARCHAR(100) NOT NULL UNIQUE,
-                       password VARCHAR(100) NOT NULL,
+                       id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                       email VARCHAR(255) NOT NULL UNIQUE,
+                       password VARCHAR(255) NOT NULL,
                        name VARCHAR(100),
-                       age INT
+                       age SMALLINT,
+                       phone VARCHAR(15),
+                       height SMALLINT,
+                       gender ENUM('Male', 'Female', 'Other')
 );
 
 -- Workouts table
 CREATE TABLE workouts (
-                          workout_id INT AUTO_INCREMENT PRIMARY KEY,
-                          user_id INT,
-                          workout_date DATE NOT NULL,
-                          duration_minutes INT,
-                          FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+                          id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                          user_id BIGINT,
+                          start_time TIME,
+                          end_time TIME,
+                          date DATE,
+                          FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 -- Exercises table
 CREATE TABLE exercises (
-                           exercise_id INT AUTO_INCREMENT PRIMARY KEY,
-                           name VARCHAR(100) NOT NULL,
-                           type VARCHAR(50)
+                           id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                           name VARCHAR(100),
+                           type ENUM('Running', 'Cycling', 'Strength', 'Swimming', 'Other'),
+                           `desc` TEXT
 );
 
 -- Workout_Exercises mapping table (many-to-many)
-CREATE TABLE workout_exercises (
-                                   workout_id INT,
-                                   exercise_id INT,
-                                   PRIMARY KEY (workout_id, exercise_id),
-                                   FOREIGN KEY (workout_id) REFERENCES workouts(workout_id) ON DELETE CASCADE,
-                                   FOREIGN KEY (exercise_id) REFERENCES exercises(exercise_id) ON DELETE CASCADE
+CREATE TABLE workout_exercise (
+                                  workout_id BIGINT,
+                                  exercise_id BIGINT,
+                                  sets SMALLINT,
+                                  reps SMALLINT,
+                                  duration TIME,
+                                  calories_burnt SMALLINT,
+                                  PRIMARY KEY(workout_id, exercise_id),
+                                  FOREIGN KEY (workout_id) REFERENCES workouts(id),
+                                  FOREIGN KEY (exercise_id) REFERENCES exercises(id)
 );
 
--- Weight entries table
-CREATE TABLE weight_entries (
-                                entry_id INT AUTO_INCREMENT PRIMARY KEY,
-                                user_id INT,
-                                entry_date DATE NOT NULL,
-                                weight_kg DECIMAL(5,2),
-                                FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+-- Progress table
+CREATE TABLE progress (
+                          id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                          user_id BIGINT,
+                          weight_kg SMALLINT,
+                          log_time DATETIME,
+                          FOREIGN KEY (user_id) REFERENCES users(id)
 );
